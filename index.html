@@ -1,0 +1,2186 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CyberSmart Challenge – Think Before You Post</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #080810;
+        --card: #10101e;
+        --card2: #14142a;
+        --accent: #00f5d4;
+        --accent2: #00c4a8;
+        --danger: #ff3b6b;
+        --warn: #ffbe0b;
+        --purple: #a78bfa;
+        --text: #eef0f8;
+        --muted: #7878a0;
+        --border: rgba(255, 255, 255, 0.07);
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "DM Sans", sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        background:
+          radial-gradient(
+            ellipse 70% 50% at 10% 0%,
+            rgba(0, 245, 212, 0.07) 0%,
+            transparent 60%
+          ),
+          radial-gradient(
+            ellipse 60% 60% at 90% 100%,
+            rgba(167, 139, 250, 0.07) 0%,
+            transparent 60%
+          );
+      }
+
+      /* ═══ LOGIN ═══ */
+      #login {
+        position: fixed;
+        inset: 0;
+        z-index: 400;
+        background: var(--bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        padding: 32px;
+      }
+      .login-box {
+        width: 100%;
+        max-width: 420px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        overflow: hidden;
+      }
+      .login-top {
+        background: linear-gradient(
+          135deg,
+          rgba(0, 245, 212, 0.1),
+          rgba(167, 139, 250, 0.08)
+        );
+        border-bottom: 1px solid var(--border);
+        padding: 32px 32px 24px;
+        text-align: center;
+      }
+      .login-ico {
+        font-size: 3rem;
+        margin-bottom: 12px;
+      }
+      .login-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 900;
+        margin-bottom: 6px;
+      }
+      .login-title span {
+        color: var(--accent);
+      }
+      .login-sub {
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+      .login-form {
+        padding: 28px 32px 32px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .form-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+      }
+      .form-input {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1.5px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 13px 16px;
+        color: var(--text);
+        font-family: "DM Sans", sans-serif;
+        font-size: 0.9rem;
+        outline: none;
+        transition: all 0.2s;
+      }
+      .form-input::placeholder {
+        color: var(--muted);
+      }
+      .form-input:focus {
+        border-color: rgba(0, 245, 212, 0.5);
+        background: rgba(0, 245, 212, 0.04);
+      }
+      .form-input.err {
+        border-color: rgba(255, 59, 107, 0.6);
+      }
+      .form-err {
+        font-size: 0.72rem;
+        color: var(--danger);
+        display: none;
+      }
+      .form-err.show {
+        display: block;
+      }
+      .login-note {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        background: rgba(255, 190, 11, 0.06);
+        border: 1px solid rgba(255, 190, 11, 0.2);
+        border-radius: 10px;
+        padding: 10px 12px;
+        font-size: 0.74rem;
+        color: #c8a850;
+        line-height: 1.5;
+      }
+      .login-submit {
+        width: 100%;
+        padding: 15px;
+        background: linear-gradient(135deg, var(--accent), var(--accent2));
+        border: none;
+        border-radius: 14px;
+        font-family: "Syne", sans-serif;
+        font-size: 0.95rem;
+        font-weight: 800;
+        color: #000;
+        cursor: pointer;
+        letter-spacing: 0.02em;
+        transition: all 0.2s;
+        box-shadow: 0 0 24px rgba(0, 245, 212, 0.2);
+        margin-top: 4px;
+      }
+      .login-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 40px rgba(0, 245, 212, 0.35);
+      }
+
+      /* ═══ SPLASH ═══ */
+      #splash {
+        position: fixed;
+        inset: 0;
+        z-index: 300;
+        background: var(--bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+        padding: 32px;
+      }
+      .sp-badge {
+        display: inline-block;
+        background: rgba(0, 245, 212, 0.1);
+        border: 1px solid rgba(0, 245, 212, 0.3);
+        border-radius: 999px;
+        padding: 6px 18px;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 20px;
+      }
+      .sp-title {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(2rem, 6vw, 3.2rem);
+        font-weight: 900;
+        line-height: 1.1;
+        margin-bottom: 14px;
+      }
+      .sp-title em {
+        color: var(--accent);
+        font-style: normal;
+      }
+      .sp-sub {
+        color: var(--muted);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        max-width: 430px;
+        margin-bottom: 30px;
+      }
+      .sp-roles {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+        margin-bottom: 30px;
+      }
+      .sp-role {
+        padding: 8px 16px;
+        border-radius: 12px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        background: var(--card2);
+        border: 1px solid var(--border);
+      }
+      .sp-role.r1 {
+        color: var(--danger);
+        border-color: rgba(255, 59, 107, 0.25);
+      }
+      .sp-role.r2 {
+        color: var(--warn);
+        border-color: rgba(255, 190, 11, 0.25);
+      }
+      .sp-role.r3 {
+        color: var(--accent);
+        border-color: rgba(0, 245, 212, 0.25);
+      }
+      .sp-role.r4 {
+        color: var(--purple);
+        border-color: rgba(167, 139, 250, 0.25);
+      }
+      .sp-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 32px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 14px 20px;
+        max-width: 420px;
+      }
+      .sp-info-icon {
+        font-size: 1.5rem;
+      }
+      .sp-info-text {
+        font-size: 0.82rem;
+        color: var(--muted);
+        text-align: left;
+        line-height: 1.5;
+      }
+      .sp-info-text strong {
+        color: var(--accent);
+      }
+      .start-btn {
+        padding: 16px 52px;
+        background: linear-gradient(135deg, var(--accent), var(--accent2));
+        border: none;
+        border-radius: 16px;
+        font-family: "Syne", sans-serif;
+        font-size: 1rem;
+        font-weight: 800;
+        color: #000;
+        cursor: pointer;
+        letter-spacing: 0.02em;
+        transition: all 0.2s;
+        box-shadow: 0 0 30px rgba(0, 245, 212, 0.25);
+      }
+      .start-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 50px rgba(0, 245, 212, 0.4);
+      }
+
+      /* ═══ GAME ═══ */
+      #game {
+        display: none;
+        position: relative;
+        z-index: 2;
+        min-height: 100vh;
+      }
+
+      /* TOP BAR */
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: rgba(8, 8, 16, 0.92);
+        backdrop-filter: blur(16px);
+        border-bottom: 1px solid var(--border);
+        padding: 12px 24px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .logo {
+        font-family: "Syne", sans-serif;
+        font-size: 1rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        flex-shrink: 0;
+      }
+      .logo span {
+        color: var(--accent);
+      }
+      .level-wrap {
+        flex: 1;
+      }
+      .level-labels {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.62rem;
+        color: var(--muted);
+        margin-bottom: 5px;
+      }
+      .level-labels .cur {
+        color: var(--text);
+        font-weight: 700;
+      }
+      .level-track {
+        height: 6px;
+        background: rgba(255, 255, 255, 0.06);
+        border-radius: 999px;
+        position: relative;
+        overflow: visible;
+      }
+      .level-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent), var(--purple));
+        border-radius: 999px;
+        transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        position: relative;
+      }
+      .level-fill::after {
+        content: "";
+        position: absolute;
+        right: -5px;
+        top: -3px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--accent);
+        box-shadow: 0 0 10px var(--accent);
+      }
+      .lv-milestone {
+        position: absolute;
+        top: -2px;
+        width: 2px;
+        height: 10px;
+        background: rgba(255, 190, 11, 0.7);
+        border-radius: 1px;
+        left: 66.6%;
+      }
+      .tb-chips {
+        display: flex;
+        gap: 8px;
+        flex-shrink: 0;
+      }
+      .tb-chip {
+        background: var(--card2);
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 5px 12px;
+        font-size: 0.74rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .tb-chip .v {
+        font-weight: 800;
+      }
+      .tb-chip.lv .v {
+        color: var(--accent);
+      }
+      .tb-chip.li .v {
+        color: var(--danger);
+      }
+
+      /* BODY */
+      .game-body {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 28px 20px 80px;
+      }
+
+      /* PERSONA */
+      .persona-bar {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 20px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 16px 20px;
+      }
+      .pa-icon {
+        font-size: 2.2rem;
+        transition: all 0.4s;
+      }
+      .pa-info {
+        flex: 1;
+      }
+      .pa-label {
+        font-size: 0.62rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--muted);
+      }
+      .pa-name {
+        font-family: "Syne", sans-serif;
+        font-size: 1rem;
+        font-weight: 800;
+        margin: 2px 0;
+      }
+      .pa-desc {
+        font-size: 0.76rem;
+        color: var(--muted);
+        line-height: 1.4;
+      }
+      .pa-lv {
+        font-family: "Syne", sans-serif;
+        font-size: 2rem;
+        font-weight: 900;
+        color: var(--accent);
+        flex-shrink: 0;
+      }
+
+      /* TRAITS */
+      .traits {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+        margin-bottom: 20px;
+      }
+      .trait {
+        padding: 5px 12px;
+        border-radius: 999px;
+        font-size: 0.72rem;
+        font-weight: 600;
+        border: 1px solid;
+      }
+      .trait.earned {
+        background: rgba(0, 245, 212, 0.08);
+        color: var(--accent);
+        border-color: rgba(0, 245, 212, 0.3);
+      }
+      .trait.locked {
+        background: rgba(255, 255, 255, 0.02);
+        color: var(--muted);
+        border-color: rgba(255, 255, 255, 0.07);
+      }
+
+      /* SCENARIO HEADER */
+      .scen-head {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 20px;
+      }
+      .scen-num {
+        width: 50px;
+        height: 50px;
+        border-radius: 14px;
+        flex-shrink: 0;
+        background: var(--card2);
+        border: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .scen-num .n {
+        font-family: "Syne", sans-serif;
+        font-size: 1.3rem;
+        font-weight: 900;
+        color: var(--accent);
+        line-height: 1;
+      }
+      .scen-num .o {
+        font-size: 0.55rem;
+        color: var(--muted);
+      }
+      .scen-meta {
+        flex: 1;
+      }
+      .scen-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 4px;
+      }
+      .scen-tag::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--accent);
+        box-shadow: 0 0 8px var(--accent);
+        animation: blink 1.4s ease-in-out infinite;
+      }
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.2;
+        }
+      }
+      .scen-title {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.05rem, 2.5vw, 1.4rem);
+        font-weight: 800;
+        line-height: 1.25;
+      }
+
+      /* STORY CARD */
+      .story-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        overflow: hidden;
+        margin-bottom: 16px;
+      }
+      .story-scene {
+        padding: 22px 24px 18px;
+        border-bottom: 1px solid var(--border);
+      }
+      .scene-lbl {
+        font-size: 0.64rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--muted);
+        margin-bottom: 8px;
+      }
+      .scene-txt {
+        font-size: 0.93rem;
+        line-height: 1.75;
+        color: #c8cce0;
+      }
+      .scene-detail {
+        margin-top: 12px;
+        padding: 12px 14px;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        font-size: 0.82rem;
+        line-height: 1.6;
+        color: #9598b8;
+        font-style: italic;
+      }
+      .choices-section {
+        padding: 18px 24px 22px;
+      }
+      .choices-lbl {
+        font-size: 0.68rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--muted);
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .choices-lbl::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+      }
+      .choices {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .choice-btn {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1.5px solid rgba(255, 255, 255, 0.09);
+        border-radius: 14px;
+        padding: 15px 18px;
+        cursor: pointer;
+        text-align: left;
+        color: var(--text);
+        font-family: "DM Sans", sans-serif;
+        font-size: 0.87rem;
+        line-height: 1.45;
+        display: flex;
+        align-items: flex-start;
+        gap: 13px;
+        transition: all 0.18s;
+      }
+      .choice-btn:hover:not(:disabled) {
+        background: rgba(255, 255, 255, 0.06);
+        border-color: rgba(255, 255, 255, 0.2);
+        transform: translateX(4px);
+      }
+      .choice-btn:disabled {
+        cursor: default;
+      }
+      .ck {
+        width: 24px;
+        height: 24px;
+        border-radius: 7px;
+        flex-shrink: 0;
+        background: rgba(255, 255, 255, 0.07);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7rem;
+        font-weight: 800;
+        margin-top: 1px;
+        font-family: "Syne", sans-serif;
+      }
+      .choice-btn.sg {
+        background: rgba(0, 245, 212, 0.07);
+        border-color: rgba(0, 245, 212, 0.45);
+      }
+      .choice-btn.sg .ck {
+        background: var(--accent);
+        color: #000;
+      }
+      .choice-btn.sb {
+        background: rgba(255, 59, 107, 0.07);
+        border-color: rgba(255, 59, 107, 0.4);
+      }
+      .choice-btn.sb .ck {
+        background: var(--danger);
+        color: #fff;
+      }
+      .choice-btn.rg {
+        background: rgba(0, 245, 212, 0.03);
+        border-color: rgba(0, 245, 212, 0.18);
+        opacity: 0.7;
+      }
+      .choice-btn.rg .ck {
+        background: rgba(0, 245, 212, 0.2);
+        color: var(--accent);
+      }
+      .choice-btn.dim {
+        opacity: 0.2;
+      }
+
+      /* CONSEQUENCE */
+      .consequence {
+        display: none;
+        border-radius: 18px;
+        overflow: hidden;
+        margin-bottom: 16px;
+        animation: fadeUp 0.4s ease both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .consequence.show {
+        display: block;
+      }
+      .consequence.good {
+        background: rgba(0, 245, 212, 0.07);
+        border: 1px solid rgba(0, 245, 212, 0.3);
+      }
+      .consequence.bad {
+        background: rgba(255, 59, 107, 0.07);
+        border: 1px solid rgba(255, 59, 107, 0.3);
+      }
+      .csq-top {
+        padding: 18px 20px 12px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .csq-ico {
+        font-size: 1.8rem;
+      }
+      .csq-tw {
+        flex: 1;
+      }
+      .csq-outcome {
+        font-size: 0.64rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 2px;
+      }
+      .consequence.good .csq-outcome {
+        color: var(--accent);
+      }
+      .consequence.bad .csq-outcome {
+        color: var(--danger);
+      }
+      .csq-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1rem;
+        font-weight: 800;
+      }
+      .csq-delta {
+        font-family: "Syne", sans-serif;
+        font-size: 0.88rem;
+        font-weight: 800;
+        white-space: nowrap;
+      }
+      .consequence.good .csq-delta {
+        color: var(--accent);
+      }
+      .consequence.bad .csq-delta {
+        color: var(--danger);
+      }
+      .csq-story {
+        padding: 0 20px 12px;
+        font-size: 0.85rem;
+        line-height: 1.72;
+        color: #b0b5cf;
+      }
+      .csq-story strong {
+        color: var(--text);
+      }
+      .csq-story em {
+        color: var(--warn);
+        font-style: normal;
+      }
+      .csq-div {
+        height: 1px;
+        background: rgba(255, 255, 255, 0.06);
+        margin: 0 20px 12px;
+      }
+      .csq-tip {
+        padding: 0 20px 16px;
+        font-size: 0.78rem;
+        line-height: 1.6;
+        color: var(--muted);
+      }
+      .csq-tip strong {
+        color: var(--warn);
+      }
+
+      /* NEXT BTN */
+      .next-btn {
+        display: none;
+        width: 100%;
+        padding: 16px;
+        background: linear-gradient(135deg, var(--accent), var(--accent2));
+        border: none;
+        border-radius: 16px;
+        font-family: "Syne", sans-serif;
+        font-size: 0.95rem;
+        font-weight: 800;
+        color: #000;
+        cursor: pointer;
+        letter-spacing: 0.03em;
+        transition: all 0.2s;
+      }
+      .next-btn:hover {
+        filter: brightness(1.1);
+        transform: translateY(-1px);
+      }
+      .next-btn.show {
+        display: block;
+        animation: fadeUp 0.3s ease 0.2s both;
+      }
+
+      /* XP BURST */
+      .xp-burst {
+        position: fixed;
+        pointer-events: none;
+        z-index: 999;
+        font-family: "Syne", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 900;
+        animation: burst 0.9s ease both;
+        text-shadow: 0 0 20px currentColor;
+      }
+      @keyframes burst {
+        0% {
+          opacity: 1;
+          transform: scale(0.7) translateY(0);
+        }
+        40% {
+          opacity: 1;
+          transform: scale(1.2) translateY(-30px);
+        }
+        100% {
+          opacity: 0;
+          transform: scale(0.9) translateY(-70px);
+        }
+      }
+
+      /* ═══ END SCREEN ═══ */
+      #end-screen {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 200;
+        background: rgba(8, 8, 16, 0.97);
+        overflow-y: auto;
+      }
+      #end-screen.show {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 40px 24px 60px;
+      }
+      .end-wrap {
+        max-width: 560px;
+        width: 100%;
+        text-align: center;
+      }
+      .end-icon {
+        font-size: 4.5rem;
+        margin-bottom: 14px;
+        animation: popIn 0.5s ease;
+      }
+      @keyframes popIn {
+        0% {
+          transform: scale(0.5);
+        }
+        70% {
+          transform: scale(1.15);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+      .end-title {
+        font-family: "Syne", sans-serif;
+        font-size: 2.2rem;
+        font-weight: 900;
+        margin-bottom: 6px;
+        line-height: 1.2;
+      }
+      .end-sub {
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin-bottom: 24px;
+      }
+
+      /* persona card */
+      .epc {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        padding: 26px;
+        margin-bottom: 20px;
+        text-align: left;
+      }
+      .epc-top {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 14px;
+      }
+      .epc-av {
+        font-size: 2.6rem;
+      }
+      .epc-name {
+        font-family: "Syne", sans-serif;
+        font-size: 1.35rem;
+        font-weight: 900;
+      }
+      .epc-lv {
+        font-size: 0.76rem;
+        color: var(--muted);
+        margin-top: 2px;
+      }
+      .epc-desc {
+        font-size: 0.86rem;
+        line-height: 1.7;
+        color: #b0b5cf;
+        margin-bottom: 14px;
+      }
+      .epc-traits {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+      }
+
+      /* scores */
+      .score-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+      .score-box {
+        background: var(--card2);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 18px 12px;
+        text-align: center;
+      }
+      .sv {
+        font-family: "Syne", sans-serif;
+        font-size: 2rem;
+        font-weight: 900;
+        line-height: 1;
+      }
+      .sv.a {
+        color: var(--accent);
+      }
+      .sv.w {
+        color: var(--warn);
+      }
+      .sv.p {
+        color: var(--purple);
+      }
+      .sl {
+        font-size: 0.7rem;
+        color: var(--muted);
+        margin-top: 4px;
+      }
+
+      /* lucky draw */
+      .ld {
+        border-radius: 20px;
+        overflow: hidden;
+        margin-bottom: 22px;
+      }
+      .ld.eli {
+        background: linear-gradient(
+          135deg,
+          rgba(0, 245, 212, 0.1),
+          rgba(167, 139, 250, 0.1)
+        );
+        border: 1px solid rgba(0, 245, 212, 0.3);
+      }
+      .ld.neli {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .ld-head {
+        padding: 18px 20px 10px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .ld-ico {
+        font-size: 2rem;
+      }
+      .ld-t {
+        font-family: "Syne", sans-serif;
+        font-size: 1.1rem;
+        font-weight: 800;
+      }
+      .ld-s {
+        font-size: 0.76rem;
+        color: var(--muted);
+      }
+      .ld-body {
+        padding: 0 20px 18px;
+        font-size: 0.84rem;
+        line-height: 1.65;
+        color: #b0b5cf;
+      }
+      .ld-prizes {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 12px;
+      }
+      .ld-prize {
+        padding: 8px 14px;
+        border-radius: 12px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .ld-prize.p1 {
+        color: var(--warn);
+        border-color: rgba(255, 190, 11, 0.3);
+      }
+      .ld-prize.p2 {
+        color: #c0c0c0;
+      }
+      .ld-prize.p3 {
+        color: #cd7f32;
+      }
+      .ld-code {
+        margin: 0 20px 18px;
+        background: rgba(0, 245, 212, 0.08);
+        border: 1px dashed rgba(0, 245, 212, 0.4);
+        border-radius: 12px;
+        padding: 14px 18px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .ldc-lbl {
+        font-size: 0.7rem;
+        color: var(--muted);
+        margin-bottom: 4px;
+      }
+      .ldc-val {
+        font-family: "Syne", sans-serif;
+        font-size: 1.3rem;
+        font-weight: 900;
+        color: var(--accent);
+        letter-spacing: 0.15em;
+      }
+      .ld-email-form {
+        padding: 0 20px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .ld-ef-label {
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+      }
+      .ld-ef-row {
+        display: flex;
+        gap: 8px;
+      }
+      .ld-ef-input {
+        flex: 1;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1.5px solid rgba(0, 245, 212, 0.3);
+        border-radius: 12px;
+        padding: 12px 14px;
+        color: var(--text);
+        font-family: "DM Sans", sans-serif;
+        font-size: 0.88rem;
+        outline: none;
+        transition: all 0.2s;
+      }
+      .ld-ef-input:focus {
+        border-color: var(--accent);
+        background: rgba(0, 245, 212, 0.05);
+      }
+      .ld-ef-btn {
+        padding: 12px 18px;
+        background: var(--accent);
+        border: none;
+        border-radius: 12px;
+        font-family: "Syne", sans-serif;
+        font-size: 0.82rem;
+        font-weight: 800;
+        color: #000;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: all 0.2s;
+        flex-shrink: 0;
+      }
+      .ld-ef-btn:hover {
+        filter: brightness(1.1);
+      }
+      .ld-success {
+        display: none;
+        padding: 16px 20px 20px;
+        text-align: center;
+      }
+      .ld-success.show {
+        display: block;
+      }
+      .ld-succ-ico {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+      }
+      .ld-succ-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1.1rem;
+        font-weight: 800;
+        color: var(--accent);
+        margin-bottom: 6px;
+      }
+      .ld-succ-text {
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+      .ld-succ-code {
+        margin-top: 12px;
+        background: rgba(0, 245, 212, 0.08);
+        border: 1px dashed rgba(0, 245, 212, 0.4);
+        border-radius: 12px;
+        padding: 12px 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .ld-succ-lbl {
+        font-size: 0.68rem;
+        color: var(--muted);
+        margin-bottom: 3px;
+      }
+      .ld-succ-val {
+        font-family: "Syne", sans-serif;
+        font-size: 1.3rem;
+        font-weight: 900;
+        color: var(--accent);
+        letter-spacing: 0.15em;
+      }
+      .restart-btn {
+        width: 100%;
+        padding: 16px;
+        background: linear-gradient(135deg, var(--accent), var(--accent2));
+        border: none;
+        border-radius: 16px;
+        font-family: "Syne", sans-serif;
+        font-size: 1rem;
+        font-weight: 800;
+        color: #000;
+        cursor: pointer;
+        transition: all 0.2s;
+        box-shadow: 0 0 30px rgba(0, 245, 212, 0.2);
+      }
+      .restart-btn:hover {
+        transform: translateY(-2px);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- LOGIN -->
+    <div id="login">
+      <div class="login-box">
+        <div class="login-top">
+          <div class="login-ico">🛡️</div>
+          <div class="login-title">Cyber<span>Smart</span> Challenge</div>
+          <div class="login-sub">
+            Enter your details to begin. If you qualify for the lucky draw, your
+            winner notification will be sent to your email.
+          </div>
+        </div>
+        <div class="login-form">
+          <div class="form-group">
+            <div class="form-label">Your Name</div>
+            <input
+              class="form-input"
+              id="inp-name"
+              type="text"
+              placeholder="e.g. Alex Tan"
+              maxlength="60"
+            />
+            <div class="form-err" id="err-name">Please enter your name.</div>
+          </div>
+          <div class="form-group">
+            <div class="form-label">Email Address</div>
+            <input
+              class="form-input"
+              id="inp-email"
+              type="email"
+              placeholder="e.g. alex@email.com"
+              maxlength="100"
+            />
+            <div class="form-err" id="err-email">
+              Please enter a valid email address.
+            </div>
+          </div>
+          <div class="login-note">
+            ⚠️ Your email is used only for lucky draw notification if you
+            qualify (Level 7+). We do not share your data with third parties.
+          </div>
+          <button class="login-submit" id="login-submit-btn">
+            Start My Journey →
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SPLASH -->
+    <div id="splash" style="display: none">
+      <div class="sp-badge">🛡️ CyberSmart Challenge</div>
+      <div class="sp-title">
+        Your choices<br />define <em>who you become</em>
+      </div>
+      <div class="sp-sub">
+        Face 6 real-life online scenarios. Every decision shapes your Digital
+        Identity Level. Make smart choices to level up — and unlock the Lucky
+        Draw at <strong style="color: var(--accent)">Level 7!</strong>
+      </div>
+      <div class="sp-roles">
+        <span class="sp-role r1">😬 The Easy Target</span>
+        <span class="sp-role r2">🤔 The Cautious Scroller</span>
+        <span class="sp-role r3">💪 CyberSmart Citizen</span>
+        <span class="sp-role r4">🛡️ The Digital Guardian</span>
+      </div>
+      <div class="sp-info">
+        <div class="sp-info-icon">🎁</div>
+        <div class="sp-info-text">
+          Answer <strong>6 or more</strong> of 10 scenarios correctly to reach
+          <strong>Level 7+</strong> and unlock the Lucky Draw — Nintendo Switch
+          2, PlayStation Portal or Razer Headset!
+        </div>
+      </div>
+      <button class="start-btn" id="start-btn">Start My Journey →</button>
+    </div>
+
+    <!-- GAME -->
+    <div id="game">
+      <div class="topbar">
+        <div class="logo">Cyber<span>Smart</span></div>
+        <div class="level-wrap">
+          <div class="level-labels">
+            <span>Lv.1 Easy Target</span>
+            <span class="cur">Level <span id="lv-num">1</span> / 10</span>
+            <span>Lv.10 Guardian</span>
+          </div>
+          <div class="level-track">
+            <div class="lv-milestone"></div>
+            <div class="level-fill" id="level-fill" style="width: 10%"></div>
+          </div>
+        </div>
+        <div class="tb-chips">
+          <div class="tb-chip lv">🏅 <span class="v" id="lv-chip">1</span></div>
+          <div class="tb-chip li">
+            ❤️ <span class="v" id="lives-chip">3</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="game-body">
+        <!-- PERSONA -->
+        <div class="persona-bar">
+          <div class="pa-icon" id="pa-icon">😬</div>
+          <div class="pa-info">
+            <div class="pa-label">Your Digital Identity</div>
+            <div class="pa-name" id="pa-name">The Easy Target</div>
+            <div class="pa-desc" id="pa-desc">
+              You're just starting out. Every choice ahead will shape who you
+              become online.
+            </div>
+          </div>
+          <div class="pa-lv" id="pa-lv">Lv.1</div>
+        </div>
+
+        <!-- TRAITS -->
+        <div class="traits" id="traits">
+          <span class="trait locked">🤝 Upstander</span>
+          <span class="trait locked">🔍 Scam Spotter</span>
+          <span class="trait locked">🔒 Privacy Guardian</span>
+          <span class="trait locked">💛 Empathetic Friend</span>
+          <span class="trait locked">🕵️ Fact Checker</span>
+          <span class="trait locked">✋ Pause &amp; Think</span>
+          <span class="trait locked">🆘 Help Seeker</span>
+        </div>
+
+        <!-- SCENARIO HEADER -->
+        <div class="scen-head">
+          <div class="scen-num">
+            <div class="n" id="sn">1</div>
+            <div class="o">of 10</div>
+          </div>
+          <div class="scen-meta">
+            <div class="scen-tag" id="s-tag">Loading…</div>
+            <div class="scen-title" id="s-title">–</div>
+          </div>
+        </div>
+
+        <!-- STORY CARD -->
+        <div class="story-card">
+          <div class="story-scene">
+            <div class="scene-lbl">📍 The Situation</div>
+            <div class="scene-txt" id="s-scene">–</div>
+            <div class="scene-detail" id="s-detail">–</div>
+          </div>
+          <div class="choices-section">
+            <div class="choices-lbl">What do you do?</div>
+            <div class="choices" id="choices"></div>
+          </div>
+        </div>
+
+        <!-- CONSEQUENCE -->
+        <div class="consequence" id="csq">
+          <div class="csq-top">
+            <div class="csq-ico" id="csq-ico">✨</div>
+            <div class="csq-tw">
+              <div class="csq-outcome" id="csq-out">–</div>
+              <div class="csq-title" id="csq-ttl">–</div>
+            </div>
+            <div class="csq-delta" id="csq-dlt"></div>
+          </div>
+          <div class="csq-story" id="csq-story"></div>
+          <div class="csq-div"></div>
+          <div class="csq-tip" id="csq-tip"></div>
+        </div>
+
+        <button class="next-btn" id="next-btn">Continue Story →</button>
+      </div>
+    </div>
+
+    <!-- END SCREEN -->
+    <div id="end-screen">
+      <div class="end-wrap">
+        <div class="end-icon" id="end-ico">🏆</div>
+        <div class="end-title" id="end-ttl">–</div>
+        <div class="end-sub">Here's the digital citizen you became…</div>
+
+        <div class="epc">
+          <div class="epc-top">
+            <div class="epc-av" id="epc-av">🛡️</div>
+            <div>
+              <div class="epc-name" id="epc-name">–</div>
+              <div class="epc-lv" id="epc-lv">Final Level –</div>
+            </div>
+          </div>
+          <div class="epc-desc" id="epc-desc">–</div>
+          <div class="epc-traits" id="epc-traits"></div>
+        </div>
+
+        <div class="score-grid">
+          <div class="score-box">
+            <div class="sv a" id="f-lv">1</div>
+            <div class="sl">Final Level</div>
+          </div>
+          <div class="score-box">
+            <div class="sv w" id="f-cor">0</div>
+            <div class="sl">Smart Choices</div>
+          </div>
+          <div class="score-box">
+            <div class="sv p" id="f-tr">0</div>
+            <div class="sl">Traits Earned</div>
+          </div>
+        </div>
+
+        <div class="ld" id="ld">
+          <div class="ld-head">
+            <div class="ld-ico" id="ld-ico">🎁</div>
+            <div>
+              <div class="ld-t" id="ld-t">Lucky Draw</div>
+              <div class="ld-s" id="ld-s">–</div>
+            </div>
+          </div>
+          <div class="ld-body" id="ld-body"></div>
+
+          <!-- EMAIL ENTRY (eligible only) -->
+          <div class="ld-email-form" id="ld-email-form" style="display: none">
+            <div class="ld-ef-label">📧 Confirm your email to enter</div>
+            <div class="ld-ef-row">
+              <input
+                class="ld-ef-input"
+                id="ld-ef-input"
+                type="email"
+                placeholder="your@email.com"
+              />
+              <button class="ld-ef-btn" id="ld-ef-btn">Enter Draw 🎟️</button>
+            </div>
+          </div>
+
+          <!-- SUCCESS STATE -->
+          <div class="ld-success" id="ld-success">
+            <div class="ld-succ-ico">🎉</div>
+            <div class="ld-succ-title">You're in the Lucky Draw!</div>
+            <div class="ld-succ-text">
+              We've registered your entry. If you win a
+              <strong style="color: var(--warn)">Grand Prize</strong>, you'll be
+              notified by email within 7 days after the campaign ends. All
+              eligible players also receive a
+              <strong style="color: var(--accent)">Participation Prize</strong>
+              — look out for your $10 voucher! Save your code below.
+            </div>
+            <div class="ld-succ-code">
+              <div>
+                <div class="ld-succ-lbl">Your Lucky Draw Code</div>
+                <div class="ld-succ-val" id="ld-succ-val">CS-XXXX</div>
+              </div>
+              <span style="font-size: 1.6rem">🎟️</span>
+            </div>
+          </div>
+        </div>
+
+        <button class="restart-btn" id="restart-btn">Play Again 🔄</button>
+      </div>
+    </div>
+
+    <script>
+      const SCENARIOS = [
+        /* ── 1. CYBERBULLYING – WHAT TO DO ── */
+        {
+          tag: "😔 Cyberbullying",
+          title: "Mean comments are flooding your friend's gaming stream",
+          scene:
+            "Your friend Jordan streams gaming every weekend. Lately a group has been posting cruel comments about their appearance and skills every single stream. Jordan is visibly upset and has started skipping streams.",
+          detail:
+            '"they keep saying i\'m ugly and should quit gaming and never show my face again 😢 it happens every stream now. idk what to do"',
+          choices: [
+            {
+              t: "Tell Jordan to ignore it — responding only gives trolls what they want.",
+              g: false,
+            },
+            {
+              t: "Encourage Jordan to fight back and defend themselves in the chat.",
+              g: false,
+            },
+            {
+              t: "Screenshot the abuse, help Jordan block and report each account, then check in on how they're feeling.",
+              g: true,
+            },
+            {
+              t: "Tell Jordan to just stop streaming entirely so the bullying stops.",
+              g: false,
+            },
+          ],
+          good: {
+            ico: "🦸",
+            out: "You showed up for your friend.",
+            ttl: "You Became the Friend Who Actually Helped",
+            story:
+              "You didn't just offer vague comfort — you took action. <strong>Together, you documented the harassment, reported the accounts, and Jordan finally felt less alone.</strong> The streaming platform removed several accounts. Jordan started streaming again a week later — and thanked you in their first stream back. You showed that caring means doing something.",
+            tip: "💡 <strong>Key Skill:</strong> Screenshot → Block → Report → Check in. Ignoring online abuse rarely makes it stop. Evidence matters when reporting.",
+            lv: 1,
+            trait: "🤝 Upstander",
+          },
+          bad: {
+            ico: "😔",
+            out: "Jordan needed more than that.",
+            ttl: "You Left Your Friend to Face It Alone",
+            story:
+              "The abuse continued for three more weeks. Jordan quietly stopped streaming and deleted their account. <strong>When you finally asked how they were, Jordan said 'I thought you didn't care.'</strong> You realised that saying 'just ignore it' is one of the least helpful responses to cyberbullying — it puts all the burden on the victim.",
+            tip: "💡 <strong>Remember:</strong> Telling someone to 'just ignore it' minimises their pain. Block, report, and emotionally support — that's how you actually help.",
+            lv: 0,
+            trait: null,
+          },
+        },
+        /* ── 2. CYBERBULLYING – BYSTANDER ── */
+        {
+          tag: "👀 Bystander Role",
+          title: "A classmate is being mocked in a group chat",
+          scene:
+            "A class group chat explodes. Someone posted embarrassing old photos of Mei with cruel captions. Others are piling on with jokes. Mei is not in this chat and has no idea.",
+          detail:
+            '"someone send this to the other classes lmao 💀" — 28 people have already reacted. The photos are being forwarded.',
+          choices: [
+            {
+              t: "React with a laugh emoji — you don't want to seem uptight or get involved.",
+              g: false,
+            },
+            {
+              t: "Stay silent and scroll past — it's not your place to say anything.",
+              g: false,
+            },
+            {
+              t: "Privately DM the person who posted and quietly ask them to take it down.",
+              g: false,
+            },
+            {
+              t: "Speak up in the chat, screenshot the conversation, and report it to your school counsellor.",
+              g: true,
+            },
+          ],
+          good: {
+            ico: "💚",
+            out: "You chose courage over comfort.",
+            ttl: "You Became the Upstander the Room Needed",
+            story:
+              "Your message in the chat made people pause. A few actually apologised. <strong>Mei was told what happened by the counsellor — and found out you had spoken up for her.</strong> She came to you later and said it meant everything. The counsellor used your screenshot to address the issue with the class. One voice changed the whole temperature of the room.",
+            tip: "💡 <strong>Bystander Power:</strong> Most people in group situations wait for someone else to act first. Being that first voice stops the pile-on faster than you think.",
+            lv: 1,
+            trait: "🤝 Upstander",
+          },
+          bad: {
+            ico: "😟",
+            out: "Your silence was part of the problem.",
+            ttl: "You Became a Passive Participant",
+            story:
+              "The photos spread to three other class chats. Mei found out a week later through a friend. <strong>She cried in class and had to take a day off school.</strong> When asked if anyone had said anything to stop it, the answer was silence. You weren't the one who posted — but your silence had quietly signalled that it was acceptable.",
+            tip: "💡 <strong>Remember:</strong> In a bystander situation, silence is a choice too. Speaking up — even just once — can stop a pile-on in its tracks.",
+            lv: 0,
+            trait: null,
+          },
+        },
+        /* ── 3. SCAM – TOO GOOD TO BE TRUE ── */
+        {
+          tag: "🎰 Scam Alert",
+          title: "Congrats — you just won a free iPhone 16 Pro!",
+          scene:
+            "An account you don't recognise DMs you out of nowhere with exciting news.",
+          detail:
+            '"📱 Congrats! You just won a FREE iPhone 16 Pro! Click this link and key in your NRIC and OTP to claim your prize before midnight tonight!" The account has 0 posts and was created 4 days ago.',
+          choices: [
+            {
+              t: "Click the link — it would be a waste to miss a free iPhone!",
+              g: false,
+            },
+            {
+              t: "Key in your NRIC but not your OTP — that way you stay safer.",
+              g: false,
+            },
+            {
+              t: "Never share your NRIC or OTP with anyone online. Report and block the account.",
+              g: true,
+            },
+            {
+              t: "Forward it to friends so they can claim prizes too.",
+              g: false,
+            },
+          ],
+          good: {
+            ico: "🕵️",
+            out: "You spotted the trap.",
+            ttl: "You Became Impossible to Fool",
+            story:
+              "You recognised the two biggest red flags immediately: <strong>no legitimate contest ever asks for your NRIC or OTP.</strong> Your OTP is a one-time password that gives direct access to your bank or accounts — handing it over is handing over your money. You reported the account. Three friends who received the same DM fell for it that same day.",
+            tip: "💡 <strong>Scam Signals:</strong> Unknown account + urgency + NRIC/OTP request = scam, 100% of the time. Your OTP is like a key to your account — never share it with anyone.",
+            lv: 1,
+            trait: "🔍 Scam Spotter",
+          },
+          bad: {
+            ico: "😰",
+            out: "You handed over the keys.",
+            ttl: "You Became a Victim of Identity Fraud",
+            story:
+              "You entered your NRIC. If you also entered an OTP, your account was compromised within minutes. <strong>A bank transfer of $800 was attempted under your name.</strong> You spent two weeks reporting to the police and your bank. Your parents were devastated — not angry, but worried. The scammer had moved on to their next victim before you even noticed.",
+            tip: "💡 <strong>Remember:</strong> Your OTP is the final key to your accounts. Even your bank will never ask for it. If anyone online asks for your OTP — hang up, close the tab, report.",
+            lv: 0,
+            trait: null,
+          },
+        },
+        /* ── 4. SCAM – PHISHING LINK ── */
+        {
+          tag: "⚠️ Phishing Check",
+          title: "An email says your parcel is held — pay a small fee",
+          scene:
+            "You receive an email saying your parcel is stuck at customs and needs a $2.50 clearance fee paid via a link. It looks official at first glance.",
+          detail:
+            'Subject: "ACTION REQUIRED: Parcel on hold" | Sender: delivery-sg@parcels-express-sg.net | Link shown: http://sg-parcel-clearance.xyz/pay — you\'re not expecting any parcels.',
+          choices: [
+            {
+              t: "Click the link and pay — $2.50 is nothing and probably legitimate.",
+              g: false,
+            },
+            {
+              t: "Reply to the email asking for more details to confirm it's real.",
+              g: false,
+            },
+            {
+              t: "Check the sender's email domain and the URL carefully — both look unofficial and suspicious.",
+              g: true,
+            },
+            {
+              t: "Go directly to the official delivery company's real website to check your delivery status.",
+              g: true,
+            },
+          ],
+          good: {
+            ico: "🔎",
+            out: "You checked before you clicked.",
+            ttl: "You Became a Phishing Detective",
+            story:
+              "You noticed two things: the sender domain was not the official company (.net instead of the real domain), and the URL had an unofficial extension (.xyz). <strong>You searched the official website directly and found no parcel.</strong> You reported the email as phishing. Your classmate who clicked the link had their card charged $340 in fraudulent transactions that same afternoon.",
+            tip: "💡 <strong>Two Checks Before Clicking:</strong> (1) Hover over the sender email — is it the real official domain? (2) Hover over the link — is the URL actually the company's real website?",
+            lv: 1,
+            trait: "🔍 Scam Spotter",
+          },
+          bad: {
+            ico: "💳",
+            out: "That $2.50 cost a lot more.",
+            ttl: "You Became a Phishing Victim",
+            story:
+              "You clicked the link and entered your card details. <strong>Within 20 minutes, $340 had been withdrawn from your account in two transactions.</strong> Your bank flagged it but the money was gone. Replying to the phishing email also confirmed your email address as active — you now receive three times as much spam.",
+            tip: "💡 <strong>Remember:</strong> Phishing emails use urgency and tiny fees to lower your guard. Legitimate delivery companies never ask for payment via a link in an email.",
+            lv: 0,
+            trait: null,
+          },
+        },
+        /* ── 5. PRIVACY – PERSONAL INFO ── */
+        {
+          tag: "🔒 Privacy",
+          title: "What's actually safe to post publicly online?",
+          scene:
+            "You're setting up a new social media profile. Your friend says 'put everything — the more info, the more followers!' You're deciding what to make public.",
+          detail:
+            "Your draft profile shows: Full name ✓, School name ✓, CCA ✓, Home address ✓, Phone number ✓, NRIC ✓, Daily location check-ins ✓. All currently set to Public.",
+          choices: [
+            {
+              t: "Make everything public — it helps people connect with you and it's fine.",
+              g: false,
+            },
+            {
+              t: "Only hide your NRIC — everything else seems harmless.",
+              g: false,
+            },
+            {
+              t: "Keep home address, phone number, NRIC, and daily location private — these can enable stalking, fraud, or impersonation.",
+              g: true,
+            },
+            {
+              t: "Delete the account entirely — social media is never safe.",
+              g: false,
+            },
+          ],
+          good: {
+            ico: "🔐",
+            out: "You drew the right privacy line.",
+            ttl: "You Became a Privacy-Smart Netizen",
+            story:
+              "You kept school and CCA public (fine for connecting with friends) but locked down your address, number, NRIC, and location. <strong>Six months later, a classmate who had posted their daily location was followed home by a stranger who had found their profile.</strong> Your digital footprint was clean — strangers could find you but couldn't find you.",
+            tip: "💡 <strong>Privacy Rule:</strong> Home address + phone + NRIC + daily location = a complete map to your real life. Keep these off public profiles always.",
+            lv: 1,
+            trait: "🔒 Privacy Guardian",
+          },
+          bad: {
+            ico: "📍",
+            out: "Your profile was a roadmap.",
+            ttl: "You Overshared Without Realising It",
+            story:
+              "Your public profile showed your school, home area, phone number, and daily check-ins. <strong>Within a month, a stranger had pieced together your routine and showed up at your school gate.</strong> You had never spoken to this person online. The school had to file a police report. Your parents were shaken.",
+            tip: "💡 <strong>Remember:</strong> A stranger doesn't need to know you personally to piece together who you are from public posts. Your location + school + schedule is all they need.",
+            lv: 0,
+            trait: null,
+          },
+        },
+        /* ── 6. PRIVACY – PASSWORDS ── */
+        {
+          tag: "🔑 Password Safety",
+          title: "Your best friend asks for your social media password",
+          scene:
+            "Your closest friend asks you for your social media password, 'just in case you ever get locked out'. They seem genuinely hurt when you hesitate.",
+          detail:
+            "\"come on, it's just me 🥺 I'd never do anything with it. what if you forget your password one day — I'm literally doing you a favour\"",
+          choices: [
+            {
+              t: "Give them the password — you trust them completely and they mean well.",
+              g: false,
+            },
+            { t: "Give them a fake password to keep the peace.", g: false },
+            {
+              t: "Kindly explain that sharing passwords is risky even between best friends — if their account gets hacked, yours does too.",
+              g: true,
+            },
+            {
+              t: "Immediately change your password and never tell anyone anything about your accounts.",
+              g: false,
+            },
+          ],
+          good: {
+            ico: "🔑",
+            out: "You protected both of you.",
+            ttl: "You Became a Password Safety Role Model",
+            story:
+              "You explained it kindly: <em>'It's not about trust — it's that if your phone ever gets stolen or your account gets hacked, mine becomes vulnerable too.'</em> <strong>Your friend actually appreciated the explanation.</strong> Three months later, their phone WAS stolen. Because you hadn't shared your password, your account was completely safe — and your friend finally understood why you'd said no.",
+            tip: "💡 <strong>Password Rule:</strong> No one should ever have your password — not your best friend, not your parent, not even 'support staff'. Use a password manager instead.",
+            lv: 1,
+            trait: "🔒 Privacy Guardian",
+          },
+          bad: {
+            ico: "😬",
+            out: "Trust doesn't equal safety.",
+            ttl: "You Found Out the Hard Way",
+            story:
+              "You gave your friend the password. Months later, during an argument, they logged into your account and read your private DMs. <strong>They shared a message you'd sent in confidence with the whole group chat.</strong> Your friendship nearly ended. You realised that even the people you love most can make mistakes under pressure — and passwords are too powerful to share.",
+            tip: "💡 <strong>Remember:</strong> Sharing a password isn't just about trust — it's about risk. If their device is ever compromised, your account is too. Protect both of you by keeping it private.",
+            lv: 0,
+            trait: null,
+          },
+        },
+        /* ── 7. HARMFUL CONTENT ── */
+        {
+          tag: "🧠 Harmful Content",
+          title: "Graphic self-harm images are appearing in your feed",
+          scene:
+            "While scrolling, you come across a post showing graphic self-harm images. People in the comments are sharing 'tips' with each other. It's deeply unsettling. Someone in the comments looks genuinely distressed.",
+          detail:
+            'The content keeps reappearing even after you scroll past. One comment reads: "I tried what someone posted here last week 😔" — the post has over 200 likes.',
+          choices: [
+            {
+              t: "Keep scrolling — it's their choice and not your responsibility.",
+              g: false,
+            },
+            {
+              t: "Like or comment to show support — at least they'll know someone cares.",
+              g: false,
+            },
+            {
+              t: "Mute and report the content, then share mental health helplines (e.g. Samaritans of Singapore: 1767) in a caring, non-judgmental way.",
+              g: true,
+            },
+            {
+              t: "Screenshot and repost to raise awareness about how bad this content is.",
+              g: false,
+            },
+          ],
+          good: {
+            ico: "💛",
+            out: "You acted with care and safety in mind.",
+            ttl: "You Became a Digital First Responder",
+            story:
+              "You reported the post and shared the Samaritans of Singapore helpline (1767) in the comments. <strong>One person privately messaged you saying they had been looking for that number for days but didn't know how to ask for help.</strong> You also turned off the algorithm's push of this content type in your settings. You protected yourself and offered a lifeline to someone who needed it.",
+            tip: "💡 <strong>Safe Response:</strong> Report → Share helplines (SOS: 1767, IMH: 6389-2222) → Adjust your algorithm. Engaging with harmful content makes the algorithm show more of it.",
+            lv: 1,
+            trait: "💛 Empathetic Friend",
+          },
+          bad: {
+            ico: "😔",
+            out: "Your response made it worse.",
+            ttl: "You Amplified the Harm",
+            story:
+              "Liking the post made the algorithm show it to more people. Screenshotting and reposting — even with good intentions — spread graphic content to hundreds more feeds. <strong>A student at another school said they first saw self-harm content through a 'raising awareness' repost.</strong> Even caring responses can cause harm if they spread graphic content further.",
+            tip: "💡 <strong>Remember:</strong> Report, don't share. Sharing graphic content — even to warn others — amplifies it. Always report directly to the platform instead.",
+            lv: 0,
+            trait: null,
+          },
+        },
+        /* ── 8. MISINFORMATION ── */
+        {
+          tag: "🕵️ Misinformation",
+          title: "A screenshot 'proves' your classmate said something racist",
+          scene:
+            "Someone posts a screenshot in the class group chat supposedly showing your classmate Ryan making racist remarks in a private conversation. People are outraged and the post is spreading fast.",
+          detail:
+            "Ryan is in tears and denying it. Looking closely, the font in the screenshot looks slightly different, and no one can find the original message. The post already has hundreds of shares in the school community.",
+          choices: [
+            {
+              t: "Share it immediately — the screenshot is evidence, and racism needs to be called out fast.",
+              g: false,
+            },
+            {
+              t: "Comment agreeing that Ryan is racist — everyone else seems convinced already.",
+              g: false,
+            },
+            {
+              t: "Pause before sharing: look for the original source, consider whether the screenshot could be edited, and wait for verification.",
+              g: true,
+            },
+            {
+              t: "Report the post for spreading potentially false information while the original message is still unverified.",
+              g: true,
+            },
+          ],
+          good: {
+            ico: "🔎",
+            out: "You paused when everyone else rushed.",
+            ttl: "You Became a Voice of Reason",
+            story:
+              "You asked in the group chat: 'Has anyone seen the original message? The font looks off.' Three others admitted they'd noticed too but hadn't said anything. <strong>A digital forensics teacher later confirmed the screenshot had been edited.</strong> Ryan was cleared. The person who fabricated it was disciplined. Your pause prevented an innocent classmate from having their reputation permanently destroyed.",
+            tip: "💡 <strong>Before Sharing:</strong> (1) Can you find the original source? (2) Does the font, spacing, or timestamp look odd? (3) Why is only one person sharing this? Fabricated screenshots are more common than people think.",
+            lv: 1,
+            trait: "🕵️ Fact Checker",
+          },
+          bad: {
+            ico: "⚡",
+            out: "You helped spread a lie.",
+            ttl: "You Became Part of the Mob",
+            story:
+              "You shared the post without checking. By that evening, Ryan had received hundreds of threatening messages. <strong>Ryan's parents had to contact the school and police.</strong> When the screenshot was later proven to be fabricated, many people quietly deleted their shares — but the damage to Ryan's reputation was already done. Screenshots spread faster than corrections.",
+            tip: "💡 <strong>Remember:</strong> A fabricated screenshot can destroy a person's reputation in hours. Once you share misinformation, you are responsible for its reach. Pause first.",
+            lv: 0,
+            trait: null,
+          },
+        },
+        /* ── 9. PAUSE BEFORE YOU POST ── */
+        {
+          tag: "✋ Think Before You Post",
+          title: "You're furious and about to post a call-out thread",
+          scene:
+            "After a heated argument with a teacher, you're shaking with anger. You've typed out a long post naming them, sharing private screenshots from class, and calling them out publicly. Your finger is hovering over 'Post'.",
+          detail:
+            "You have 600 followers. The post tags the teacher by full name and includes screenshots from a class group chat. Other students are already asking you to post it.",
+          choices: [
+            {
+              t: "Post it — when you're this angry, the truth needs to come out immediately.",
+              g: false,
+            },
+            {
+              t: "Send it to three close friends first to get their approval, then post.",
+              g: false,
+            },
+            {
+              t: "Ask yourself: 'Will I regret this tomorrow? Could this affect my future? Can I solve this another way?' — wait 24 hours before deciding.",
+              g: true,
+            },
+            {
+              t: "Delete the draft and speak to a school counsellor or trusted adult about your frustration instead.",
+              g: true,
+            },
+          ],
+          good: {
+            ico: "✋",
+            out: "You chose restraint over reaction.",
+            ttl: "You Became Someone Who Thinks First",
+            story:
+              "You saved the draft and slept on it. <strong>The next morning you re-read it and deleted it yourself.</strong> You spoke to the vice-principal instead, who took your concern seriously through proper channels. The issue was addressed without anyone's reputation being destroyed online. Two months later, a classmate who had posted an angry thread about a teacher was called in by the police for harassment. You were glad you'd waited.",
+            tip: "💡 <strong>The 24-Hour Rule:</strong> Any post made in anger should wait 24 hours. Screenshots of private messages shared publicly can constitute harassment. Your digital footprint follows you to university applications and job interviews.",
+            lv: 1,
+            trait: "✋ Pause & Think",
+          },
+          bad: {
+            ico: "🔥",
+            out: "The post caused more harm than you expected.",
+            ttl: "You Became the Story Instead",
+            story:
+              "The post went viral across the school. <strong>The teacher's family members saw it. The school principal called you in the next day.</strong> Your parents were summoned. The screenshots you shared violated the privacy of other students who hadn't consented. The teacher filed a formal complaint. What started as venting turned into a formal disciplinary case that affected your academic record.",
+            tip: "💡 <strong>Remember:</strong> Posting in anger rarely achieves what you actually want. It escalates, involves others, and creates a permanent record. The most powerful response is often a calm, private one.",
+            lv: 0,
+            trait: null,
+          },
+        },
+        /* ── 10. GETTING HELP / REPORTING ── */
+        {
+          tag: "🆘 Getting Help",
+          title:
+            "Something scary happened online — but you're afraid to speak up",
+          scene:
+            "After a frightening online encounter — someone threatened you and mentioned your home area — you've been anxious and unable to sleep. You're afraid that if you tell your parents, they'll overreact and take your phone away.",
+          detail:
+            "The person is still online and active. You've been carrying this completely alone for five days. You jump every time your phone buzzes.",
+          choices: [
+            {
+              t: "Keep it to yourself and hope the person forgets about you over time.",
+              g: false,
+            },
+            {
+              t: "Block the person and don't tell anyone — you can handle it alone.",
+              g: false,
+            },
+            {
+              t: "Tell a trusted adult — a parent, teacher, or school counsellor. Your safety matters more than your phone.",
+              g: true,
+            },
+            {
+              t: "Contact a helpline like TOUCHline (1800-377-2252) or make a police report via i-Witness if you're not ready to tell family yet.",
+              g: true,
+            },
+          ],
+          good: {
+            ico: "🛡️",
+            out: "You chose safety over silence.",
+            ttl: "You Became Someone Who Asks for Help",
+            story:
+              "You told your school counsellor first — someone you trusted to stay calm. <strong>They helped you make a police report and contacted your parents in a way that didn't feel like a punishment.</strong> The police were able to trace the account. Your parents were upset — but at the situation, not at you. Asking for help was the bravest thing you did. Within two weeks, you felt safe again.",
+            tip: "💡 <strong>Singapore Help Channels:</strong> Police emergency: 999 | Online crime reporting: i-Witness (police.gov.sg) | TOUCHline: 1800-377-2252 | School counsellor: always a safe first step.",
+            lv: 1,
+            trait: "🆘 Help Seeker",
+          },
+          bad: {
+            ico: "😰",
+            out: "The threat didn't disappear — it grew.",
+            ttl: "You Suffered Alone When You Didn't Have To",
+            story:
+              "You blocked the account, but they created a new one. The anxiety kept building. <strong>After three weeks of poor sleep and constant fear, your grades dropped and your friends noticed something was wrong.</strong> When it finally came out, your parents were heartbroken — not because you'd been threatened, but because you'd carried it alone for so long. The help was always there. You just hadn't reached for it.",
+            tip: "💡 <strong>Remember:</strong> Telling an adult doesn't mean losing your phone — it means gaining protection. Most parents and counsellors want to help, not punish. You deserve support.",
+            lv: 0,
+            trait: null,
+          },
+        },
+      ];
+
+      const PERSONAS = [
+        {
+          min: 1,
+          max: 2,
+          icon: "😬",
+          name: "The Easy Target",
+          desc: "You're still learning the ropes. Scammers and harmful content are slipping past your radar. Every replay sharpens your instincts.",
+        },
+        {
+          min: 3,
+          max: 4,
+          icon: "🤔",
+          name: "The Cautious Scroller",
+          desc: "You're spotting some red flags, but hesitation sometimes holds you back. You're actively growing.",
+        },
+        {
+          min: 5,
+          max: 6,
+          icon: "💡",
+          name: "The Aware Netizen",
+          desc: "You understand most risks and often make good calls. Your digital awareness is noticeably above average.",
+        },
+        {
+          min: 7,
+          max: 8,
+          icon: "💪",
+          name: "The CyberSmart Citizen",
+          desc: "You make smart, principled choices online. People around you are safer because of your awareness. Lucky Draw eligible!",
+        },
+        {
+          min: 9,
+          max: 10,
+          icon: "🛡️",
+          name: "The Digital Guardian",
+          desc: "You protect yourself, call out harm, and stand up for others. True digital leadership — and Lucky Draw eligible!",
+        },
+      ];
+
+      const ALL_TRAITS = [
+        "🤝 Upstander",
+        "🔍 Scam Spotter",
+        "🔒 Privacy Guardian",
+        "💛 Empathetic Friend",
+        "🕵️ Fact Checker",
+        "✋ Pause & Think",
+        "🆘 Help Seeker",
+      ];
+
+      let idx = 0,
+        level = 1,
+        lives = 3,
+        correct = 0,
+        earned = new Set();
+      let userName = "",
+        userEmail = "",
+        drawCode = "";
+
+      function persona(lv) {
+        return (
+          PERSONAS.find((p) => lv >= p.min && lv <= p.max) ||
+          PERSONAS[PERSONAS.length - 1]
+        );
+      }
+
+      /* ── LOGIN ── */
+      function handleLogin() {
+        const name = document.getElementById("inp-name").value.trim();
+        const email = document.getElementById("inp-email").value.trim();
+        let ok = true;
+        const ni = document.getElementById("inp-name"),
+          ei = document.getElementById("inp-email");
+        const ne = document.getElementById("err-name"),
+          ee = document.getElementById("err-email");
+        ni.classList.remove("err");
+        ne.classList.remove("show");
+        ei.classList.remove("err");
+        ee.classList.remove("show");
+        if (!name) {
+          ni.classList.add("err");
+          ne.classList.add("show");
+          ok = false;
+        }
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          ei.classList.add("err");
+          ee.classList.add("show");
+          ok = false;
+        }
+        if (!ok) return;
+        userName = name;
+        userEmail = email;
+        document.getElementById("login").style.display = "none";
+        document.getElementById("splash").style.display = "flex";
+      }
+
+      function refreshTop() {
+        const p = persona(level);
+        document.getElementById("pa-icon").textContent = p.icon;
+        document.getElementById("pa-name").textContent = p.name;
+        document.getElementById("pa-desc").textContent = p.desc;
+        document.getElementById("pa-lv").textContent = "Lv." + level;
+        document.getElementById("lv-num").textContent = level;
+        document.getElementById("lv-chip").textContent = level;
+        document.getElementById("level-fill").style.width =
+          Math.max(((level - 1) / 9) * 100, 10) + "%";
+        const tr = document.getElementById("traits");
+        tr.innerHTML = "";
+        ALL_TRAITS.forEach((t) => {
+          const s = document.createElement("span");
+          s.className = "trait " + (earned.has(t) ? "earned" : "locked");
+          s.textContent = t;
+          tr.appendChild(s);
+        });
+      }
+
+      function load(i) {
+        if (i >= SCENARIOS.length) {
+          endScreen();
+          return;
+        }
+        const s = SCENARIOS[i];
+        document.getElementById("sn").textContent = i + 1;
+        document.getElementById("s-tag").textContent = s.tag;
+        document.getElementById("s-title").textContent = s.title;
+        document.getElementById("s-scene").textContent = s.scene;
+        document.getElementById("s-detail").textContent = s.detail;
+        const cl = document.getElementById("choices");
+        cl.innerHTML = "";
+        ["A", "B", "C", "D"].forEach((k, j) => {
+          const b = document.createElement("button");
+          b.className = "choice-btn";
+          b.innerHTML = `<span class="ck">${k}</span><span>${s.choices[j].t}</span>`;
+          b.addEventListener("click", () => pick(j));
+          cl.appendChild(b);
+        });
+        document.getElementById("csq").className = "consequence";
+        document.getElementById("next-btn").className = "next-btn";
+        refreshTop();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function pick(j) {
+        const s = SCENARIOS[idx];
+        const isGood = s.choices[j].g;
+        const d = isGood ? s.good : s.bad;
+        document.querySelectorAll(".choice-btn").forEach((b, i) => {
+          b.disabled = true;
+          if (i === j) b.classList.add(isGood ? "sg" : "sb");
+          else if (s.choices[i].g) b.classList.add("rg");
+          else b.classList.add("dim");
+        });
+        if (isGood) {
+          level = Math.min(level + d.lv, 10);
+          correct++;
+          if (d.trait) earned.add(d.trait);
+          burst("+2 LVL ⚡", "#00f5d4");
+        } else {
+          lives = Math.max(0, lives - 1);
+          document.getElementById("lives-chip").textContent = lives;
+          burst("No Level Up", "#ff3b6b");
+        }
+        refreshTop();
+        const csq = document.getElementById("csq");
+        csq.className = "consequence show " + (isGood ? "good" : "bad");
+        document.getElementById("csq-ico").textContent = d.ico;
+        document.getElementById("csq-out").textContent = d.out;
+        document.getElementById("csq-ttl").textContent = d.ttl;
+        document.getElementById("csq-dlt").textContent = isGood
+          ? "+2 Levels"
+          : "No Level Up";
+        document.getElementById("csq-story").innerHTML = d.story;
+        document.getElementById("csq-tip").innerHTML = d.tip;
+        const nb = document.getElementById("next-btn");
+        nb.textContent =
+          idx === SCENARIOS.length - 1
+            ? "See My Final Identity →"
+            : "Continue Story →";
+        nb.className = "next-btn show";
+      }
+
+      function burst(txt, col) {
+        const el = document.createElement("div");
+        el.className = "xp-burst";
+        el.textContent = txt;
+        el.style.color = col;
+        el.style.left = window.innerWidth / 2 - 50 + "px";
+        el.style.top = "70px";
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 900);
+      }
+
+      function endScreen() {
+        const p = persona(level);
+        document.getElementById("end-ico").textContent = p.icon;
+        document.getElementById("end-ttl").textContent = p.name;
+        document.getElementById("epc-av").textContent = p.icon;
+        document.getElementById("epc-name").textContent = p.name;
+        document.getElementById("epc-lv").textContent =
+          `Final Digital Identity · Level ${level}`;
+        document.getElementById("epc-desc").textContent = p.desc;
+        document.getElementById("f-lv").textContent = level;
+        document.getElementById("f-cor").textContent = correct;
+        document.getElementById("f-tr").textContent = earned.size;
+        const et = document.getElementById("epc-traits");
+        et.innerHTML = "";
+        ALL_TRAITS.forEach((t) => {
+          const s = document.createElement("span");
+          s.className = "trait " + (earned.has(t) ? "earned" : "locked");
+          s.textContent = t;
+          et.appendChild(s);
+        });
+        const eli = level >= 7;
+        const ld = document.getElementById("ld");
+        ld.className = "ld " + (eli ? "eli" : "neli");
+        document.getElementById("ld-ico").textContent = eli ? "🎁" : "🔒";
+        document.getElementById("ld-t").textContent = eli
+          ? "Lucky Draw Unlocked! 🎉"
+          : "Lucky Draw Locked";
+        document.getElementById("ld-s").textContent = eli
+          ? `You reached Level ${level} — you're eligible!`
+          : `Need Level 7. You ended at Level ${level}.`;
+        document.getElementById("ld-body").innerHTML = eli
+          ? `<strong style="color:var(--text)">${userName}</strong>, congratulations! You've proven you have the digital smarts to protect yourself online. Enter your email below to register — the winner will be notified by email!
+    <div class="ld-prizes" style="margin-top:12px">
+      <div style="font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--warn);margin-bottom:6px;width:100%">🏆 Grand Prizes</div>
+      <span class="ld-prize p1">🥇 Nintendo Switch 2</span>
+      <span class="ld-prize p2">🥈 PlayStation Portal</span>
+      <span class="ld-prize p3">🥉 Razer Headset</span>
+    </div>
+    <div class="ld-prizes" style="margin-top:10px">
+      <div style="font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);margin-bottom:6px;width:100%">🎁 Participation Prizes <span style="font-weight:400;color:var(--muted)">(all eligible players)</span></div>
+      <span class="ld-prize" style="color:#00c853;border-color:rgba(0,200,83,0.3);background:rgba(0,200,83,0.08)">🛵 $10 Grab Voucher × 25</span>
+      <span class="ld-prize" style="color:#64b5f6;border-color:rgba(100,181,246,0.3);background:rgba(100,181,246,0.08)">📚 $10 POPULAR Voucher × 25</span>
+    </div>`
+          : `You need Level 7 to enter. You ended at Level ${level}. Play again and make smarter choices to level up!`;
+        drawCode =
+          "CS-" + Math.random().toString(36).substring(2, 6).toUpperCase();
+        const ef = document.getElementById("ld-email-form");
+        const suc = document.getElementById("ld-success");
+        if (eli) {
+          ef.style.display = "flex";
+          document.getElementById("ld-ef-input").value = userEmail;
+          suc.className = "ld-success";
+        } else {
+          ef.style.display = "none";
+          suc.className = "ld-success";
+        }
+        document.getElementById("end-screen").className = "show";
+      }
+
+      function submitDraw() {
+        const inp = document.getElementById("ld-ef-input");
+        const email = inp.value.trim();
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          inp.style.borderColor = "rgba(255,59,107,0.6)";
+          setTimeout(() => {
+            inp.style.borderColor = "";
+          }, 1200);
+          return;
+        }
+        document.getElementById("ld-email-form").style.display = "none";
+        document.getElementById("ld-succ-val").textContent = drawCode;
+        document.getElementById("ld-success").className = "ld-success show";
+      }
+
+      function restart() {
+        idx = 0;
+        level = 1;
+        lives = 3;
+        correct = 0;
+        earned.clear();
+        document.getElementById("lives-chip").textContent = "3";
+        document.getElementById("end-screen").className = "";
+        load(0);
+      }
+
+      function startGame() {
+        document.getElementById("splash").style.display = "none";
+        document.getElementById("game").style.display = "block";
+        load(0);
+      }
+
+      document
+        .getElementById("login-submit-btn")
+        .addEventListener("click", handleLogin);
+      document.getElementById("inp-name").addEventListener("keydown", (e) => {
+        if (e.key === "Enter") handleLogin();
+      });
+      document.getElementById("inp-email").addEventListener("keydown", (e) => {
+        if (e.key === "Enter") handleLogin();
+      });
+      document.getElementById("start-btn").addEventListener("click", startGame);
+      document.getElementById("next-btn").addEventListener("click", () => {
+        idx++;
+        load(idx);
+      });
+      document.getElementById("restart-btn").addEventListener("click", restart);
+      document
+        .getElementById("ld-ef-btn")
+        .addEventListener("click", submitDraw);
+      document
+        .getElementById("ld-ef-input")
+        .addEventListener("keydown", (e) => {
+          if (e.key === "Enter") submitDraw();
+        });
+    </script>
+  </body>
+</html>
